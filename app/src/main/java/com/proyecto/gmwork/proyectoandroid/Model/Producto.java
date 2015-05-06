@@ -1,20 +1,35 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
 
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Matthew on 05/05/2015.
  */
+
+@DatabaseTable(tableName = "PRODUCTO")
 public class Producto {
+    @DatabaseField(generatedId = true)
     private long id;
+    @DatabaseField
     private String nombre;
+    @DatabaseField
     private double precio;
+    @DatabaseField
     private byte[] img;
+    @DatabaseField
     private boolean inhabilitats;
+    @DatabaseField
     private double descuento;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Categoria categoria;
-    private List liniaPedido = new ArrayList<PedidoProducto>();
+    @ForeignCollectionField
+    private ForeignCollection<PedidoProducto> liniaPedidos;
 
     public Producto() {
     }
@@ -83,16 +98,16 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public List getLiniaPedido() {
-        return liniaPedido;
+    public ForeignCollection<PedidoProducto> getLiniaPedidos() {
+        return liniaPedidos;
     }
 
-    public void setLiniaPedido(List liniaPedido) {
-        this.liniaPedido = liniaPedido;
+    public void setLiniaPedidos(ForeignCollection<PedidoProducto> liniaPedidos) {
+        this.liniaPedidos = liniaPedidos;
     }
 
     public void addLiniaPedido(PedidoProducto liPro) {
-        this.liniaPedido.add(liPro);
+        this.liniaPedidos.add(liPro);
         liPro.setProducto(this);
     }
 }
