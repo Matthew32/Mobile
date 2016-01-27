@@ -1,12 +1,19 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 /**
  * Created by mateo on 30/04/15.
  */
+@DatabaseTable(tableName = "LINIAPRODUCTO")
 public class PedidoProducto {
- private long id;
+    @DatabaseField(generatedId = true)
+    private long id;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Producto producto;
-    private com.proyecto.gmwork.proyectoandroid.Model.Pedido pedido;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Pedido pedido;
+    @DatabaseField
     private double cantidad;
 
     public PedidoProducto() {

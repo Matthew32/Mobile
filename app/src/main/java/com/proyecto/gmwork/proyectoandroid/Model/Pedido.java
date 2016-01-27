@@ -1,5 +1,9 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
 
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
 import com.proyecto.gmwork.proyectoandroid.Model.PedidoProducto;
 
 import java.util.ArrayList;
@@ -9,13 +13,18 @@ import java.util.List;
 /**
  * Created by mateo on 30/04/15.
  */
+@DatabaseTable(tableName = "PEDIDO")
 public class Pedido {
-
+    @DatabaseField(generatedId = true)
     private long id;
+    @DatabaseField
     private Date fecha;
+    @DatabaseField
     private String estado;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Cliente cliente;
-    private List liniaProducto = new ArrayList<PedidoProducto>();
+    @ForeignCollectionField
+    private ForeignCollection<PedidoProducto> liniaProducto;
     
     public Pedido() {
     }
@@ -56,12 +65,12 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
-    public List getLiniaProducto() {
+
+    public ForeignCollection<PedidoProducto> getLiniaProducto() {
         return liniaProducto;
     }
-    
-    public void setLiniaProducto(List liniaProducto) {
+
+    public void setLiniaProducto(ForeignCollection<PedidoProducto> liniaProducto) {
         this.liniaProducto = liniaProducto;
     }
 

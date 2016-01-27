@@ -1,25 +1,49 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
 
+import android.support.annotation.NonNull;
+
+import com.j256.ormlite.dao.CloseableIterator;
+import com.j256.ormlite.dao.CloseableWrappedIterable;
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by mateo on 30/04/15.
  */
+@DatabaseTable(tableName = "CLIENTE")
 public class Cliente {
- 
+    @DatabaseField(generatedId = true)
     private long id;
+    @DatabaseField
     private String nif;
+    @DatabaseField
     private String nombre;
+    @DatabaseField
     private String apellidos;
+    @DatabaseField
     private double longitud;
+    @DatabaseField
     private double latitud;
+    @DatabaseField
     private String calle;
+    @DatabaseField
     private String poblacion;
+    @DatabaseField
     private Date proximaVisita;
-    private List pedido = new ArrayList<Pedido>();
-    
+    @ForeignCollectionField
+    private ForeignCollection<Pedido> pedido ;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Usuario usu;
+
     public Cliente() {
     }
     
@@ -32,6 +56,7 @@ public class Cliente {
         this.calle = calle;
         this.poblacion = poblacion;
         this.proximaVisita = proximaVisita;
+
     }
     
     public long getId() {
@@ -106,11 +131,20 @@ public class Cliente {
         this.proximaVisita = proximaVisita;
     }
 
-    public List getPedido() {
+
+    public Usuario getUsu() {
+        return usu;
+    }
+
+    public void setUsu(Usuario usu) {
+        this.usu = usu;
+    }
+
+    public ForeignCollection getPedido() {
         return pedido;
     }
-    
-    public void setPedido(List pedido) {
+
+    public void setPedido(ForeignCollection pedido) {
         this.pedido = pedido;
     }
 

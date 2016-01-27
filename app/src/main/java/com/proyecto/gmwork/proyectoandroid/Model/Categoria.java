@@ -1,17 +1,26 @@
 package com.proyecto.gmwork.proyectoandroid.Model;
 
+import com.j256.ormlite.dao.ForeignCollection;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Matthew on 05/05/2015.
  */
+@DatabaseTable(tableName = "CATEGORIA")
 public class Categoria {
-
+    @DatabaseField(generatedId = true)
     private long id;
+    @DatabaseField
     private String nombre;
+    @DatabaseField
     private double descuento;
-    private List productos = new ArrayList<Producto>();
+    @ForeignCollectionField
+    private ForeignCollection<Producto> productos;
 
     public Categoria() {
     }
@@ -45,11 +54,11 @@ public class Categoria {
         this.descuento = descuento;
     }
 
-    public List getProductos() {
+    public ForeignCollection<Producto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List productos) {
+    public void setProductos(ForeignCollection<Producto> productos) {
         this.productos = productos;
     }
 
